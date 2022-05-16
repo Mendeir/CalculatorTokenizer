@@ -21,4 +21,8 @@ public class Position {
         
         return this;   
     }
+
+    Position copy(){
+        return new Position(this.idx, this.ln, this.col, this.fn, this.ftxt);
+    }
 }
