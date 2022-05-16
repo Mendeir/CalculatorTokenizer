@@ -9,4 +9,16 @@ public class Position {
         this.fn = fn;
         this.ftxt = ftxt;
     }
+    
+    Position advance(char current_char){
+        this.idx += 1;
+        this.col += 1;
+        
+        if(current_char == '\n'){
+            this.ln += 1;
+            this.col = 0;
+        }
+        
+        return this;   
+    }
 }
