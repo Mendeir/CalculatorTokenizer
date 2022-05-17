@@ -2,17 +2,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    private static ArrayList<String> tokenList = new ArrayList<String>();
+
     public static void main(String[] args) {
         while (true) {
             Scanner scan = new Scanner(System.in);
             System.out.print("basic > ");
             String userText = scan.nextLine();
-            ArrayList<String> tokenList = new ArrayList<String>();
-            IllegalCharError error = run("<stdin>", userText, tokenList);
 
-            System.out.println(error);
             if (userText.equals("exit"))
                 break;
+            userText += "\n";
+
+            IllegalCharError error = run("<stdin>", userText);
 
             if (error != null) {
                 System.out.println(error.as_string());
@@ -22,9 +24,9 @@ public class Main {
         }
     }
 
-    private static IllegalCharError run(String fileDescriptor, String userText, ArrayList<String> givenTokenList) {
+    private static IllegalCharError run(String fileDescriptor, String userText) {
         Lexer lexer = new Lexer(fileDescriptor, userText);
-        ArrayList<String> tokens = lexer.makeTokens();
+        tokenList = lexer.makeTokens();
         IllegalCharError error = lexer.getCharError();
         return error;
     }

@@ -20,7 +20,7 @@ public class Lexer {
         this.token = new Token();
         this.tokens = new Hashtable<String, String>();
         this.Advance();
-        this.current_char = ' ';
+        fillUpDictionary();
     }
 
     public void Advance(){
@@ -44,8 +44,8 @@ public class Lexer {
 
     public ArrayList<String> makeTokens(){
         ArrayList<String> token = new ArrayList<String>(); // Create an ArrayList object
-        while(current_char != ' '){
-            if (current_char == '\t') {
+        while(current_char != '\n'){
+            if (current_char == ' ' || current_char == '\t') {
                 this.Advance();
             }else if(isDigit(current_char)){
                 token.add(makeNumber());
@@ -80,27 +80,27 @@ public class Lexer {
     }
 
     public String makeNumber() {
-        char number_string = ' ';
+        StringBuilder number_string = new StringBuilder(" ");
         int dot_count = 0;
 
-        while (current_char != ' ') {
+        while (current_char != '\n' && (isDigit(current_char) || current_char == '.')) {
             if (current_char == '.') {
                 if (dot_count == 1)
                     break;
                 dot_count += 1;
-                number_string += '.';
+                number_string.append('.');
             } else {
-                number_string += current_char;
+                number_string.append(current_char);
             }
             this.Advance();
-            if (dot_count == 0) {
-                return token.returnToken(tokens.get("TT_INT"), number_string);
-            } else {
-                //return Token(TT_FLOAT, float(number_string));
-                return token.returnToken(tokens.get("TT_FLOAT"), number_string);
-            }
         }
-        return token.returnToken(tokens.get("TT_INT"), number_string);
+
+        if (dot_count == 0) {
+            return token.returnToken(tokens.get("TT_INT"), number_string.toString());
+        } else {
+            //return Token(TT_FLOAT, float(number_string));
+            return token.returnToken(tokens.get("TT_FLOAT"), number_string.toString());
+        }
     }
 
     public IllegalCharError getCharError() {
