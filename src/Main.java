@@ -1,8 +1,10 @@
+import java.util.Scanner;
+
 public class Main {
-
-
     public static void main(String[] args) {
-        //test
-        Token t = new Token();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("basic > ");
+        
+
     }
 }
