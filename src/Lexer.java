@@ -7,7 +7,7 @@ public class Lexer {
     private Position position;
     private String current_char;
     private Token token;
-    private Dictionary tokens;
+    private Dictionary<String, String> tokens;
 
     public Lexer(String fileDescriptor, String text, Position position, String current_char) {
         this.fileDescriptor = fileDescriptor;
@@ -15,7 +15,19 @@ public class Lexer {
         this.position = position;
         this.current_char = current_char;
         this.token = new Token();
-        this.tokens = new Hashtable();
+        this.tokens = new Hashtable<String, String>();
+    }
+
+    public void fillUpDictionary() {
+        tokens.put("TT_INT", "INT");
+        tokens.put("TT_FLOAT", "FLOAT");
+        tokens.put("TT_PLUS", "PLUS");
+        tokens.put("TT_MINUS", "MINUS");
+        tokens.put("TT_MUL", "MUL");
+        tokens.put("TT_DIV", "DIV");
+        tokens.put("TT_LPAREN", "LPAREN");
+        tokens.put("TT_RPAREN", "RPAREN");
+
     }
 
     public void makeNumber() {
