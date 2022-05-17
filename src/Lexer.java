@@ -52,6 +52,6 @@ public class Lexer {
             }
         }
         
-        return number_string;
+        return token.returnToken(tokens.get("TT_INT"), number_string);
     }
 }
