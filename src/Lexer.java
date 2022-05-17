@@ -70,22 +70,24 @@ public class Lexer {
                 Position pos_start = this.position.copy();
                 char characters = this.current_char;
                 this.Advance();
-                return IllegalCharError(pos_start, this.position,"'" + characters + "'");
+                IllegalCharError(pos_start, this.position,"'" + characters + "'");
+                return null;
+                
             }
         }
         return token;
     }
 
     public String makeNumber() {
-        String number_string = " ";
+        char number_string = ' ';
         int dot_count = 0;
 
-        while (current_char != " ") {
-            if (current_char == ".") {
+        while (current_char != ' ') {
+            if (current_char == '.') {
                 if (dot_count == 1)
                     break;
                 dot_count += 1;
-                number_string += ".";
+                number_string += '.';
             } else {
                 number_string += current_char;
             }
