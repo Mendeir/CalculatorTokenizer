@@ -25,4 +25,16 @@ public class Position {
     Position copy(){
         return new Position(this.idx, this.ln, this.col, this.fn, this.ftxt);
     }
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public String getFn() {
+        return fn;
+    }
+
+    public String getFtxt() {
+        return ftxt;
+    }
 }
