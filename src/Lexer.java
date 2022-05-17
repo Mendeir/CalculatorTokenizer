@@ -11,6 +11,7 @@ public class Lexer {
     private char current_char = ' ';
     private Token token;
     private Dictionary<String, String> tokens;
+    private IllegalCharError charError;
 
     public Lexer(String fileDescriptor, String text, char current_char) {
         this.fileDescriptor = fileDescriptor;
@@ -70,7 +71,7 @@ public class Lexer {
                 Position pos_start = this.position.copy();
                 char characters = this.current_char;
                 this.Advance();
-                IllegalCharError error = new IllegalCharError(pos_start, this.position,"'" + characters + "'");
+                charError = new IllegalCharError(pos_start, this.position,"'" + characters + "'");
                 return null;
                 
             }
@@ -100,5 +101,9 @@ public class Lexer {
             }
         }
         return token.returnToken(tokens.get("TT_INT"), number_string);
+    }
+
+    public IllegalCharError getCharError() {
+        return charError;
     }
 }
