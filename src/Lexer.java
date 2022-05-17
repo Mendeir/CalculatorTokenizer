@@ -1,17 +1,24 @@
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 public class Lexer {
     private String fileDescriptor;
     private String text;
     private Position position;
     private String current_char;
+    private Token token;
+    private Dictionary tokens;
 
     public Lexer(String fileDescriptor, String text, Position position, String current_char) {
         this.fileDescriptor = fileDescriptor;
         this.text = text;
         this.position = position;
         this.current_char = current_char;
+        this.token = new Token();
+        this.tokens = new Hashtable();
     }
 
-    public Token makeNumber() {
+    public void makeNumber() {
         String number_string = " ";
         int dot_count = 0;
 
@@ -26,9 +33,11 @@ public class Lexer {
             }
 
             if (dot_count == 0) {
-                return Token(TT_INT, int(number_string));
+                //return token.returnToken()
+                return;
             } else {
-                return Token(TT_FLOAT, float(number_string));
+                //return Token(TT_FLOAT, float(number_string));
+                return;
             }
         }
     }
