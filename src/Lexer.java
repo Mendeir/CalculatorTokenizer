@@ -30,7 +30,7 @@ public class Lexer {
 
     }
 
-    public void makeNumber() {
+    public String makeNumber() {
         String number_string = " ";
         int dot_count = 0;
 
@@ -45,12 +45,13 @@ public class Lexer {
             }
 
             if (dot_count == 0) {
-                //return token.returnToken()
-                return;
+                return token.returnToken(tokens.get("TT_INT"), number_string);
             } else {
                 //return Token(TT_FLOAT, float(number_string));
-                return;
+                return token.returnToken(tokens.get("TT_FLOAT"), number_string);
             }
         }
+        
+        return number_string;
     }
 }
