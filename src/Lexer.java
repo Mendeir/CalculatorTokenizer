@@ -70,7 +70,7 @@ public class Lexer {
                 Position pos_start = this.position.copy();
                 char characters = this.current_char;
                 this.Advance();
-                IllegalCharError(pos_start, this.position,"'" + characters + "'");
+                IllegalCharError error = new IllegalCharError(pos_start, this.position,"'" + characters + "'");
                 return null;
                 
             }
