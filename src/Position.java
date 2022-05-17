@@ -34,6 +34,10 @@ public class Position {
         return fn;
     }
 
+    public int getLn() {
+        return ln;
+    }
+
     public String getFtxt() {
         return ftxt;
     }
