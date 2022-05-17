@@ -51,7 +51,6 @@ public class Lexer {
                 return token.returnToken(tokens.get("TT_FLOAT"), number_string);
             }
         }
-        
         return token.returnToken(tokens.get("TT_INT"), number_string);
     }
 }
