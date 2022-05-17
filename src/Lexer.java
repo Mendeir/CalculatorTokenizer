@@ -8,19 +8,19 @@ public class Lexer {
     private String fileDescriptor;
     private String text;
     private Position position;
-    private char current_char = ' ';
+    private char current_char;
     private Token token;
     private Dictionary<String, String> tokens;
     private IllegalCharError charError;
 
-    public Lexer(String fileDescriptor, String text, char current_char) {
+    public Lexer(String fileDescriptor, String text) {
         this.fileDescriptor = fileDescriptor;
         this.text = text;
         this.position = new Position(-1,0,-1, fileDescriptor, text);
-        this.current_char = current_char;
         this.token = new Token();
         this.tokens = new Hashtable<String, String>();
         this.Advance();
+        this.current_char = ' ';
     }
 
     public void Advance(){
@@ -92,7 +92,7 @@ public class Lexer {
             } else {
                 number_string += current_char;
             }
-
+            this.Advance();
             if (dot_count == 0) {
                 return token.returnToken(tokens.get("TT_INT"), number_string);
             } else {
