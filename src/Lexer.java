@@ -50,22 +50,22 @@ public class Lexer {
             }else if(isDigit(current_char)){
                 token.add(makeNumber());
             }else if(current_char == '+'){
-                token.add(Token.TT_PLUS);
+                token.add(tokens.get("TT_PLUS"));
                 this.Advance();
             }else if(current_char == '-'){
-                token.add(Token.TT_MINUS);
+                token.add(tokens.get("TT_MINUS"));
                 this.Advance();
             }else if(current_char == '*'){
-                token.add(Token.TT_MUL);
+                token.add(tokens.get("TT_MUL"));
                 this.Advance();
             }else if(current_char == '/'){
-                token.add(Token.TT_DIV);
+                token.add(tokens.get("TT_DIV"));
                 this.Advance();
             }else if(current_char == '('){
-                token.add(Token.TT_LPAREN);
+                token.add(tokens.get("TT_LPAREN"));
                 this.Advance();
             }else if(current_char == ')'){
-                token.add(Token.TT_RPAREN);
+                token.add(tokens.get("TT_RPAREN"));
                 this.Advance();
             }else{
                 Position pos_start = this.position.copy();
