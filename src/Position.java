@@ -1,8 +1,8 @@
 public class Position {
-    private int idx, ln, col, fn;
-    private String ftxt;
+    private int idx, ln, col;
+    private String fn, ftxt;
 
-    public Position(int idx, int ln, int col, int fn, String ftxt){
+    public Position(int idx, int ln, int col, String fn, String ftxt){
         this.idx = idx;
         this.ln = ln;
         this.col = col;
@@ -24,5 +24,21 @@ public class Position {
 
     Position copy(){
         return new Position(this.idx, this.ln, this.col, this.fn, this.ftxt);
+    }
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public String getFn() {
+        return fn;
+    }
+
+    public int getLn() {
+        return ln;
+    }
+
+    public String getFtxt() {
+        return ftxt;
     }
 }
