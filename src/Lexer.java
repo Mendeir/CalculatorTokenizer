@@ -8,18 +8,19 @@ public class Lexer {
     private String fileDescriptor;
     private String text;
     private Position position;
-    private char current_char = ' ';
+    private char current_char;
     private Token token;
     private Dictionary<String, String> tokens;
+    private IllegalCharError charError;
 
-    public Lexer(String fileDescriptor, String text, char current_char) {
+    public Lexer(String fileDescriptor, String text) {
         this.fileDescriptor = fileDescriptor;
         this.text = text;
         this.position = new Position(-1,0,-1, fileDescriptor, text);
-        this.current_char = current_char;
         this.token = new Token();
         this.tokens = new Hashtable<String, String>();
         this.Advance();
+        fillUpDictionary();
     }
 
     public void Advance(){
@@ -43,34 +44,34 @@ public class Lexer {
 
     public ArrayList<String> makeTokens(){
         ArrayList<String> token = new ArrayList<String>(); // Create an ArrayList object
-        while(current_char != ' '){
-            if (current_char == '\t') {
+        while(current_char != '\n'){
+            if (current_char == ' ' || current_char == '\t') {
                 this.Advance();
             }else if(isDigit(current_char)){
                 token.add(makeNumber());
             }else if(current_char == '+'){
-                token.add(Token.TT_PLUS);
+                token.add(tokens.get("TT_PLUS"));
                 this.Advance();
             }else if(current_char == '-'){
-                token.add(Token.TT_MINUS);
+                token.add(tokens.get("TT_MINUS"));
                 this.Advance();
             }else if(current_char == '*'){
-                token.add(Token.TT_MUL);
+                token.add(tokens.get("TT_MUL"));
                 this.Advance();
             }else if(current_char == '/'){
-                token.add(Token.TT_DIV);
+                token.add(tokens.get("TT_DIV"));
                 this.Advance();
             }else if(current_char == '('){
-                token.add(Token.TT_LPAREN);
+                token.add(tokens.get("TT_LPAREN"));
                 this.Advance();
             }else if(current_char == ')'){
-                token.add(Token.TT_RPAREN);
+                token.add(tokens.get("TT_RPAREN"));
                 this.Advance();
             }else{
                 Position pos_start = this.position.copy();
                 char characters = this.current_char;
                 this.Advance();
-                IllegalCharError error = new IllegalCharError(pos_start, this.position,"'" + characters + "'");
+                charError = new IllegalCharError(pos_start, this.position,"'" + characters + "'");
                 return null;
                 
             }
@@ -79,26 +80,30 @@ public class Lexer {
     }
 
     public String makeNumber() {
-        char number_string = ' ';
+        StringBuilder number_string = new StringBuilder(" ");
         int dot_count = 0;
 
-        while (current_char != ' ') {
+        while (current_char != '\n' && (isDigit(current_char) || current_char == '.')) {
             if (current_char == '.') {
                 if (dot_count == 1)
                     break;
                 dot_count += 1;
-                number_string += '.';
+                number_string.append('.');
             } else {
-                number_string += current_char;
+                number_string.append(current_char);
             }
-
-            if (dot_count == 0) {
-                return token.returnToken(tokens.get("TT_INT"), number_string);
-            } else {
-                //return Token(TT_FLOAT, float(number_string));
-                return token.returnToken(tokens.get("TT_FLOAT"), number_string);
-            }
+            this.Advance();
         }
-        return token.returnToken(tokens.get("TT_INT"), number_string);
+
+        if (dot_count == 0) {
+            return token.returnToken(tokens.get("TT_INT"), number_string.toString());
+        } else {
+            //return Token(TT_FLOAT, float(number_string));
+            return token.returnToken(tokens.get("TT_FLOAT"), number_string.toString());
+        }
+    }
+
+    public IllegalCharError getCharError() {
+        return charError;
     }
 }

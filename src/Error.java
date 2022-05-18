@@ -16,7 +16,7 @@ public class Error {
     public String as_string(){
         String result;
         result = this.error_name + ":" + this.details + "\n";
-        result += "File" + this.pos_start.getFn() + "," + "line" + this.pos_start.getLn();
+        result += "File " + this.pos_start.getFn() + "," + "line " + this.pos_start.getLn() + 1;
         return result;
     }
 }
