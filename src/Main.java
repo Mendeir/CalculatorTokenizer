@@ -30,4 +30,6 @@ public class Main {
         IllegalCharError error = lexer.getCharError();
         return error;
     }
+
+    
 }
